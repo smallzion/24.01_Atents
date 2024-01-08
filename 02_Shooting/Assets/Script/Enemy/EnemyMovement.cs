@@ -8,6 +8,8 @@ public class EnemyMovement : MonoBehaviour
     public float frequeny = 2.0f;
     float spawnY = 0.0f;
     float elapsedTime = 0.0f;
+    public float hp = 3.0f;
+    public int enemyScore = 10;
     private void Start()
     {
         spawnY = transform.position.y;
@@ -20,13 +22,38 @@ public class EnemyMovement : MonoBehaviour
     }
     private void OnBecameInvisible()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Bullet"))
         {
-            Destroy(collision.gameObject);
+            OnDamage();
         }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+
+
+    }
+    private void OnDamage()
+    {
+        if (hp > 0.0f)
+        {
+            hp--;
+            Debug.Log("Ã¼·Â" +  hp);
+        }
+        else
+        {  
+            OnDie();
+
+        }
+    }
+    void OnDie()
+    {
+        Player player = FindAnyObjectByType<Player>();
+        player.AddScore(enemyScore);
+        Destroy(gameObject);
     }
 }

@@ -32,7 +32,7 @@ public class Test_Instantiate : TestBase
     }
     protected override void OnTest4(InputAction.CallbackContext context)
     {
-        Instantiate(prefab, this.transform);
+        Instantiate(prefab, transform);
     }
     protected override void OnTest5(InputAction.CallbackContext context)
     {

@@ -18,9 +18,29 @@ public class Player : MonoBehaviour
     public Transform fireTransform;
     readonly int InputY_String = Animator.StringToHash("InputY");
     public float hp = 3;
+    public float collisionCooldown = 1.0f;
+    public float fireCooldown = 0.3f;
+    public Sprite[] fire;
+    InputAction.CallbackContext fireContext;
+    SpriteRenderer spriteRenderer;
+    int score = 0;
+    public Action<int> onScoreChange;
 
-/*    public Sprite[] idle;
-    SpriteRenderer spriteRenderer;*/
+    int Score
+    {
+        get => score;
+        set
+        {
+            if (score != value)
+            {
+                score = value;  // 최대 점수 99999
+                onScoreChange?.Invoke(score);   // 이 델리게이트에 함수를 등록한 모든 대상에게 변경된 점수를 알림
+            }
+        }
+    }
+
+    /*    public Sprite[] idle;
+        SpriteRenderer spriteRenderer;*/
     //이 스크립트가 포함된 게임오브젝트가 활성화되면 호출한다.
     private void Awake()
     {
@@ -57,7 +77,7 @@ public class Player : MonoBehaviour
     //이 스크립트가 포함된 게임오브젝트의 첫번째 update()함수가 실행되기 직전에 호출한다.
     private void Start()
     {  
-        /*spriteRenderer = GetComponent<SpriteRenderer>();*/
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void FixedUpdate()
     {
@@ -66,15 +86,25 @@ public class Player : MonoBehaviour
 
     private void OnFire(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        fireContext = context;
+        if(fireContext.performed)
         {
             Debug.Log("onfire눌러짐");
-            Instantiate(bulletPrefab, fireTransform.transform.position, Quaternion.identity);
+            StartCoroutine(FireCooldown());
+
         }
-        if(context.canceled)
+        if(fireContext.canceled)
         {
+            fireTransform.GetComponent<SpriteRenderer>().sprite = fire[1];
             Debug.Log("onfire떼어짐");
+            StopAllCoroutines();
         }
+    }
+    private void OnFire()
+    {
+        fireTransform.GetComponent<SpriteRenderer>().sprite = fire[0];
+        Instantiate(bulletPrefab, fireTransform.transform.position, Quaternion.identity);
+        
     }
     private void OnBoost(InputAction.CallbackContext context)
     {
@@ -113,26 +143,60 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.gameObject.CompareTag("Enemy"))
+        {
+            OnDamage();
+            Invoke("OffDamage", collisionCooldown);
+        }
+    }
+    void OnDamage()
+    {
+        float count = 0;
+        gameObject.layer = 9;
+        Debug.Log(gameObject.layer);
+        while(count <= 10)
+        {
+            if(count % 2 == 0)
+            {
+            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            }
+            else
+            {
+                spriteRenderer.color = new Color(1, 1, 1, 1);
+            }
+            count++;
+        }
+        
+        hp -= 1.0f;
+        Debug.Log("현재 남은체력: " + hp);
+        if (hp <= 0.0f)
+        {
+            Dead();
+        }
+    }
+    void OffDamage()
+    {
+        Debug.Log("off데미지 호출");
+        gameObject.layer = 6;
+        spriteRenderer.color = new Color(1, 1, 1, 1);
+    }
+    void Dead()
+    {
+        Destroy(gameObject);
+    }
+    IEnumerator FireCooldown()
+    {
+        while(true)
+        {
+            OnFire();
+            yield return new WaitForSecondsRealtime(fireCooldown);
+            fireTransform.GetComponent<SpriteRenderer>().sprite = fire[1];
+            yield return new WaitForSecondsRealtime(0.1f);
+        }
         
     }
-    private void OnCollisionExit2D(Collision2D collision)
+    public void AddScore(int getScore)
     {
-        
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        
+        Score += getScore;
     }
 }

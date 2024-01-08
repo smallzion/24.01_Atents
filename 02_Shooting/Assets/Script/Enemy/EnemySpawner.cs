@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public float MaxY = 4.0f, MinY = -4.0f;
+    public float spawnDelay = 1.0f;
     //실습
     //1. 적을 스폰한다.
     //2. 랜덤한 높이로 생성된다.(y: +4 ~ -4)
@@ -58,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(spawnDelay);
             EnemySpawn();
         }
     }

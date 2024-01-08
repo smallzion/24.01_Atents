@@ -11,19 +11,18 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position += Time.deltaTime * new Vector3(bulletSpeed, Random.Range(-10.0f, 10.0f), 0);
+        transform.position += Time.deltaTime * new Vector3(bulletSpeed, Random.Range(-10.0f, 10.0f), 0);
     }
     void OnBecameInvisible()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
-            Instantiate(EffectPrefab, this.transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
-            Destroy(collision.gameObject);
+            Instantiate(EffectPrefab, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
     //1. bullet 프리팹에 필요한 ㄴ컴포넌트 추가 및 설정
