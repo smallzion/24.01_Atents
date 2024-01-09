@@ -26,10 +26,10 @@ public class Player : MonoBehaviour
     int score = 0;
     public Action<int> onScoreChange;
 
-    int Score
+    public int Score
     {
         get => score;
-        set
+        private set
         {
             if (score != value)
             {
