@@ -5,13 +5,13 @@ using UnityEngine.InputSystem;
 
 public class Test_Delegate : TestBase
 {
-    //delegate(µ¨¸®°ÔÀÌÆ®)
-    //- ÇÔ¼ö¸¦ ÀúÀåÇÒ ¼ö ÀÖ´Â º¯¼ö Å¸ÀÔ
-    //- ÇÔ¼ö Ã¼ÀÎ(chain)ÀÌ °¡´É
-    //- ¾î¶² »ç°ÇÀÌ ¹ß»ıÇßÀ½À» ¾Ë¸±¶§ »ç¿ëÇÏ¸é Æí¸®
+    //delegate(ë¸ë¦¬ê²Œì´íŠ¸)
+    //- í•¨ìˆ˜ë¥¼ ì €ì¥í•  ìˆ˜ ìˆëŠ” ë³€ìˆ˜ íƒ€ì…
+    //- í•¨ìˆ˜ ì²´ì¸(chain)ì´ ê°€ëŠ¥
+    //- ì–´ë–¤ ì‚¬ê±´ì´ ë°œìƒí–ˆìŒì„ ì•Œë¦´ë•Œ ì‚¬ìš©í•˜ë©´ í¸ë¦¬
 
-    public delegate void TestDelegate(); //µ¨¸®°ÔÀÌÆ® Å¸ÀÔÀ» ÇÏ³ª »ı¼º (ÀÌ µ¨¸®°ÔÀÌÆ®´Â ÆÄ¶ó¸ŞÅÍ°¡ ¾ø°í ¸®ÅÏ°ªµµ ¾ø´Â ÇÔ¼ö¸¸ ÀúÀåÇÒ ¼ö ÀÖ´Ù.)
-    TestDelegate aaa; //TestDelegateÅ¸ÀÔÀ¸·Î ÇÔ¼ö¸¦ ÀúÀåÇÒ ¼ö ÀÖ´Â aaa¶ó´Â º¯¼ö¸¦ ¸¸µë
+    public delegate void TestDelegate(); //ë¸ë¦¬ê²Œì´íŠ¸ íƒ€ì…ì„ í•˜ë‚˜ ìƒì„± (ì´ ë¸ë¦¬ê²Œì´íŠ¸ëŠ” íŒŒë¼ë©”í„°ê°€ ì—†ê³  ë¦¬í„´ê°’ë„ ì—†ëŠ” í•¨ìˆ˜ë§Œ ì €ì¥í•  ìˆ˜ ìˆë‹¤.)
+    TestDelegate aaa; //TestDelegateíƒ€ì…ìœ¼ë¡œ í•¨ìˆ˜ë¥¼ ì €ì¥í•  ìˆ˜ ìˆëŠ” aaaë¼ëŠ” ë³€ìˆ˜ë¥¼ ë§Œë“¬
 
     void TestRun()
     {
@@ -19,9 +19,9 @@ public class Test_Delegate : TestBase
     }
     private void Start()
     {
-        aaa = TestRun; //ÀÌÀü¿¡ ÀÖ´ø ÇÔ¼öµéÀ» ´Ù ¹«½ÃÇÏ°í TestRun¸¸ Ãß°¡
-        aaa += TestRun; //ÀÌÀü¿¡ ÀÖ´ø ÇÔ¼öµé µÚ¿¡ TestRun Ãß°¡
-        aaa = TestRun + aaa; // aaa ¸Ç ¾Õ¿¡ TestRunÃß°¡
+        aaa = TestRun; //ì´ì „ì— ìˆë˜ í•¨ìˆ˜ë“¤ì„ ë‹¤ ë¬´ì‹œí•˜ê³  TestRunë§Œ ì¶”ê°€
+        aaa += TestRun; //ì´ì „ì— ìˆë˜ í•¨ìˆ˜ë“¤ ë’¤ì— TestRun ì¶”ê°€
+        aaa = TestRun + aaa; // aaa ë§¨ ì•ì— TestRunì¶”ê°€
     }
 
     protected override void OnTest1(InputAction.CallbackContext context)

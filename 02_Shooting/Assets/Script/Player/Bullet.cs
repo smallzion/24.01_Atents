@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : RecycleObject
 {
     public float bulletSpeed = 20.0f;
     public GameObject EffectPrefab;
 
-    // Update is called once per frame
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+    }
+
     void Update()
     {
         transform.position += Time.deltaTime * new Vector3(bulletSpeed, Random.Range(-10.0f, 10.0f), 0);
     }
     void OnBecameInvisible()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
             Instantiate(EffectPrefab, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
     //1. bullet 프리팹에 필요한 ㄴ컴포넌트 추가 및 설정

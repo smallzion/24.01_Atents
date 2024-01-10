@@ -24,22 +24,22 @@ public class Score : MonoBehaviour
     }
     private void Update()
     {
-        if(currentScore < goalScore)//Á¡¼ö°¡ ¿Ã¶ó°¡´Â µµÁß
+        if(currentScore < goalScore)//ì ìˆ˜ê°€ ì˜¬ë¼ê°€ëŠ” ë„ì¤‘
         {
-            float speed = Mathf.Max((goalScore - currentScore) * 5.0f, scoreUpSpeed); // ÃÖ¼Ò scoreUpSpeed º¸Àå
+            float speed = Mathf.Max((goalScore - currentScore) * 5.0f, scoreUpSpeed); // ìµœì†Œ scoreUpSpeed ë³´ìž¥
 
             currentScore += Time.deltaTime * speed;
             currentScore = Mathf.Min(currentScore, goalScore);
             int temp = (int)currentScore;
             score.text = $"Score: {temp:d5}";
-            //score.text = $"Score : {currentScore:f0}; // ¼Ò¼öÁ¡ Ãâ·Â ¾ÈÇÏ±â
+            //score.text = $"Score : {currentScore:f0}; // ì†Œìˆ˜ì  ì¶œë ¥ ì•ˆí•˜ê¸°
         }
     }
 
     private void RefreshScore(int newScore)
     {
-        //score.text = $"Score : {newScore:d5}";  // ¹«Á¶°Ç Á¡¼ö´Â 5ÀÚ¸®·Î Ãâ·Â. ºóÀÚ¸®´Â 0À¸·Î Ã¤¿ì±â
-        //score.text = $"Score : {newScore,5}"; // ¹«Á¶°Ç Á¡¼ö´Â 5ÀÚ¸®·Î Ãâ·Â. ºóÀÚ¸®´Â ½ºÆäÀÌ½º·Î Ã¤¿ì±â
+        //score.text = $"Score : {newScore:d5}";  // ë¬´ì¡°ê±´ ì ìˆ˜ëŠ” 5ìžë¦¬ë¡œ ì¶œë ¥. ë¹ˆìžë¦¬ëŠ” 0ìœ¼ë¡œ ì±„ìš°ê¸°
+        //score.text = $"Score : {newScore,5}"; // ë¬´ì¡°ê±´ ì ìˆ˜ëŠ” 5ìžë¦¬ë¡œ ì¶œë ¥. ë¹ˆìžë¦¬ëŠ” ìŠ¤íŽ˜ì´ìŠ¤ë¡œ ì±„ìš°ê¸°
         goalScore = newScore;
     }
 }

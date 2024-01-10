@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4877666217406382646, guid: 127da30c28e9f684f9f8cecb5eb2fb85, type: 3}
   moveSpeed: 5
-  fireTransform: {fileID: 0}
+  fireTransform: {fileID: 6587928938775715973}
   hp: 100
   collisionCooldown: 3
   fireCooldown: 0.3

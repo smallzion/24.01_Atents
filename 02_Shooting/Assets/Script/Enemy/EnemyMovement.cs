@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : RecycleObject
 {
     public float amlitude = 3.0f;
     public float frequeny = 2.0f;
@@ -11,22 +11,41 @@ public class EnemyMovement : MonoBehaviour
     float elapsedTime = 0.0f;
     public float hp = 3.0f;
     public int enemyScore = 10;
-    public Action onDie; // ÀÓ½Ã
+    public Action onDie; // ì„ì‹œ
+    Player player;
 
-    //¶÷´Ù½Ä, ¶÷´ÙÇÔ¼ö(Lambda)
-    //ÀÍ¸í ÇÔ¼ö
+    //ëŒë‹¤ì‹, ëŒë‹¤í•¨ìˆ˜(Lambda)
+    //ìµëª… í•¨ìˆ˜
 
-    private void Start()
+  /*  private void Start()
     {
         spawnY = transform.position.y;
         elapsedTime = 0.0f;
 
-        Action aaa = () => Debug.Log("¶÷´Ù½Ä");            //ÆÄ¶ó¸ŞÅÍ ¾ø´Â ¶÷´Ù½Ä
-        Action<int> bbb = (x) => Debug.Log($"¶÷´Ù½Ä{x}");  //ÆÄ¶ó¸ŞÅÍ°¡ ÇÏ³ªÀÎ ¶÷´Ù½Ä
-        Func<int> ccc = () => 10;                          //ÆÄ¶ó¸ŞÅÍ ¾ø°í Ç×»ó 10À» ¸®ÅÏÇÏ´Â ¶÷´Ù½Ä
+        Action aaa = () => Debug.Log("ëŒë‹¤ì‹");            //íŒŒë¼ë©”í„° ì—†ëŠ” ëŒë‹¤ì‹
+        Action<int> bbb = (x) => Debug.Log($"ëŒë‹¤ì‹{x}");  //íŒŒë¼ë©”í„°ê°€ í•˜ë‚˜ì¸ ëŒë‹¤ì‹
+        Func<int> ccc = () => 10;                          //íŒŒë¼ë©”í„° ì—†ê³  í•­ìƒ 10ì„ ë¦¬í„´í•˜ëŠ” ëŒë‹¤ì‹
 
         Player player = FindAnyObjectByType<Player>();
-        onDie += () => player.AddScore(enemyScore);        //Á×À»¶§ ÇÃ·¹ÀÌ¾îÀÇ AddScoreÇÔ¼ö¿¡ ÆÄ¶ó¹ÌÅÍ·Î enemyScore¸¦ ³Ö°í ½ÇÇàÇÏµµ·Ï µî·Ï
+        onDie += () => player.AddScore(enemyScore);        //ì£½ì„ë•Œ í”Œë ˆì´ì–´ì˜ AddScoreí•¨ìˆ˜ì— íŒŒë¼ë¯¸í„°ë¡œ enemyScoreë¥¼ ë„£ê³  ì‹¤í–‰í•˜ë„ë¡ ë“±ë¡
+    }*/
+    private void Start()
+    {
+        player = FindAnyObjectByType<Player>();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        spawnY = transform.position.y;
+        elapsedTime = 0.0f;
+
+        /*Action aaa = () => Debug.Log("ëŒë‹¤ì‹");            //íŒŒë¼ë©”í„° ì—†ëŠ” ëŒë‹¤ì‹
+        Action<int> bbb = (x) => Debug.Log($"ëŒë‹¤ì‹{x}");  //íŒŒë¼ë©”í„°ê°€ í•˜ë‚˜ì¸ ëŒë‹¤ì‹
+        Func<int> ccc = () => 10;                          //íŒŒë¼ë©”í„° ì—†ê³  í•­ìƒ 10ì„ ë¦¬í„´í•˜ëŠ” ëŒë‹¤ì‹*/
+
+        Player player = FindAnyObjectByType<Player>();
+        onDie += () => player.AddScore(enemyScore);        //ì£½ì„ë•Œ í”Œë ˆì´ì–´ì˜ AddScoreí•¨ìˆ˜ì— íŒŒë¼ë¯¸í„°ë¡œ enemyScoreë¥¼ ë„£ê³  ì‹¤í–‰í•˜ë„ë¡ ë“±ë¡
     }
     void Update()
     {
@@ -55,7 +74,7 @@ public class EnemyMovement : MonoBehaviour
         if (hp > 0.0f)
         {
             hp--;
-            Debug.Log("Ã¼·Â" +  hp);
+            Debug.Log("ì²´ë ¥" +  hp);
         }
         else
         {  
@@ -77,7 +96,7 @@ public class EnemyMovement : MonoBehaviour
         for (int i = 0; i < score; i++)
         {
             player.AddScore(1);
-            Debug.Log(i + "¹ø ¹İº¹");
+            Debug.Log(i + "ë²ˆ ë°˜ë³µ");
             yield return new WaitForSeconds(0.01f);
         }
         Destroy(gameObject);

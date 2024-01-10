@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Explosion : MonoBehaviour
+public class Explosion : RecycleObject
 {
     // Start is called before the first frame update
     private Animator m_Animator;
@@ -10,13 +10,14 @@ public class Explosion : MonoBehaviour
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
-        //¾Ö´Ï¸ŞÀÌÅÍ Å¬¸³±æÀÌ ¹Ş¾Æ¿À±â
-        //GetCurrentAnimatorClipInfo(0): ¾Ö´Ï¸ŞÀÌÅÍÀÇ Ã¹¹øÂ° ·¹ÀÌ¾îÀÇ Á¤º¸¸¦ °¡Á®¿À±â
-        //GetCurrentAnimatorClipInfo(0)[0]: ¾Ö´Ï¸ŞÀÌÅÍÀÇ Ã¹¹øÂ° ·¹ÀÌ¾î¿¡ ÀÖ´Â ¾Ö´Ï¸ŞÀÌ¼Ç Å¬¸³Áß Ã¹¹øÂ° Å¬¸³ÀÇ Á¤º¸ ¹Ş¾Æ¿À±â
+        //ì• ë‹ˆë©”ì´í„° í´ë¦½ê¸¸ì´ ë°›ì•„ì˜¤ê¸°
+        //GetCurrentAnimatorClipInfo(0): ì• ë‹ˆë©”ì´í„°ì˜ ì²«ë²ˆì§¸ ë ˆì´ì–´ì˜ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ê¸°
+        //GetCurrentAnimatorClipInfo(0)[0]: ì• ë‹ˆë©”ì´í„°ì˜ ì²«ë²ˆì§¸ ë ˆì´ì–´ì— ìˆëŠ” ì• ë‹ˆë©”ì´ì…˜ í´ë¦½ì¤‘ ì²«ë²ˆì§¸ í´ë¦½ì˜ ì •ë³´ ë°›ì•„ì˜¤ê¸°
         animLength = m_Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
     }
-    public void EndAnim()
+    protected override void OnEnable()
     {
-        Destroy(this.gameObject);
+        base.OnEnable();
+        StartCoroutine(LifeOver());
     }
 }
